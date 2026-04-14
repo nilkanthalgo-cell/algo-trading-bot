@@ -1,0 +1,34 @@
+{
+  "instant_buy": {
+    "enable": true,
+    "product": "CNC",
+    "stocks": {
+      "YESBANK": { "qty": 1, "enable": true },
+      "ONGC": { "qty": 1, "enable": false }
+    }
+  },
+
+  "time_trade": {
+    "enable": true,
+    "product": "MIS",
+    "stocks": {
+      "INFY": { "qty": 1, "enable": true }
+    }
+    
+  },
+  "morning_trade": {
+  "enable": true,
+  "product": "MIS",
+  "stocks": {
+    "INFY": { "qty": 1, "enable": true }
+  }
+  },
+
+  "ema_strategy": {
+    "enable": true,
+    "product": "MIS",
+    "stocks": {
+      "INFY": { "qty": 1, "enable": true }
+    }
+  }
+}
