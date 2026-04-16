@@ -1,9 +1,9 @@
-traded_stocks = set()
+traded = set()
 
 
-def is_traded(symbol):
-    return symbol in traded_stocks
+def is_traded(strategy, symbol):
+    return (strategy, symbol) in traded
 
 
-def mark_traded(symbol):
-    traded_stocks.add(symbol)
+def mark_traded(strategy, symbol):
+    traded.add((strategy, symbol))

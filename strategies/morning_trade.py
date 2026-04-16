@@ -12,23 +12,16 @@ STOPLOSS_PCT = 2
 
 
 # 🔥 =========================
-# 🔥 CHANGE TIME HERE (ENTRY)
+# 🔥 CHANGE ENTRY TIME HERE
 # 🔥 =========================
-ENTRY_HOUR = 9
-ENTRY_MINUTE = 20
-# Example:
-# ENTRY_HOUR = 13
-# ENTRY_MINUTE = 45
-
+ENTRY_HOUR = 13
+ENTRY_MINUTE = 17
 
 # 🔥 =========================
-# 🔥 CHANGE TIME HERE (EXIT)
+# 🔥 CHANGE EXIT TIME HERE
 # 🔥 =========================
-EXIT_HOUR = 9
-EXIT_MINUTE = 30
-# Example:
-# EXIT_HOUR = 14
-# EXIT_MINUTE = 0
+EXIT_HOUR = 13
+EXIT_MINUTE = 18
 
 
 def wait_until(hour, minute):
@@ -63,18 +56,27 @@ def run(kite):
 
     positions = {}
 
-    # 🔥 BUY AT ENTRY TIME
+    # 🔥 BUY SECTION (FIXED)
     for symbol, config in stocks.items():
         if not config.get("enable", False):
             continue
 
-        if is_traded(symbol):
-            print(f"{symbol} already traded. Skipping...")
+        # ✅ Strategy-based trade check
+        if is_traded("morning_trade", symbol):
+            print(f"{symbol} already traded in morning_trade. Skipping...")
             continue
 
         qty = config.get("qty", 0)
 
-        smart_buy(kite, symbol, qty, product)
+        print(f"Buying {symbol} (Qty: {qty})")
+
+        # ✅ CHECK ORDER SUCCESS
+        success = smart_buy(kite, symbol, qty, product)
+
+        if not success:
+            print(f"{symbol} BUY failed. Skipping...")
+            continue
+
         entry = get_ltp(kite, symbol)
 
         positions[symbol] = {
@@ -83,7 +85,7 @@ def run(kite):
             "active": True
         }
 
-        mark_traded(symbol)
+        mark_traded("morning_trade", symbol)
 
         print(f"{symbol} bought at {entry}")
 
@@ -104,19 +106,19 @@ def run(kite):
 
             print(f"{symbol} | {ltp} | {change:.2f}%")
 
-            # ✅ TARGET
+            # ✅ TARGET HIT
             if change >= TARGET_PCT:
                 print(f"{symbol} Target Hit")
                 smart_sell(kite, symbol, pos["qty"], product)
                 pos["active"] = False
 
-            # ✅ STOPLOSS
+            # ✅ STOPLOSS HIT
             elif change <= -STOPLOSS_PCT:
                 print(f"{symbol} Stoploss Hit")
                 smart_sell(kite, symbol, pos["qty"], product)
                 pos["active"] = False
 
-            # 🔥 FORCE EXIT AT EXIT TIME
+            # 🔥 TIME EXIT
             elif now.hour == EXIT_HOUR and now.minute >= EXIT_MINUTE:
                 print(f"{symbol} Time Exit ({EXIT_HOUR}:{EXIT_MINUTE})")
                 smart_sell(kite, symbol, pos["qty"], product)

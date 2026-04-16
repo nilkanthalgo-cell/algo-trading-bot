@@ -23,7 +23,7 @@ def run(kite):
         if not config.get("enable", False):
             continue
 
-        if is_traded(symbol):
+        if is_traded("instant_buy", symbol):
             print(f"{symbol} already traded. Skipping...")
             continue
 
@@ -32,4 +32,4 @@ def run(kite):
         print(f"Buying {symbol} (Qty: {qty})")
         smart_buy(kite, symbol, qty, product)
 
-        mark_traded(symbol)
+        mark_traded("instant_buy", symbol)

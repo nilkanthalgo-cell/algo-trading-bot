@@ -46,8 +46,9 @@ def run(kite):
         if not config.get("enable", False):
             continue
 
-        if is_traded(symbol):
-            print(f"{symbol} already traded. Skipping...")
+        # ✅ Strategy-based check
+        if is_traded("time_trade", symbol):
+            print(f"{symbol} already traded in time_trade. Skipping...")
             continue
 
         qty = config.get("qty", 0)
@@ -61,7 +62,7 @@ def run(kite):
             "active": True
         }
 
-        mark_traded(symbol)
+        mark_traded("time_trade", symbol)
         print(f"{symbol} bought at {entry}")
 
     print("\nMonitoring...\n")

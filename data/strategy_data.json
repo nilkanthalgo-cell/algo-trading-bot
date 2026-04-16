@@ -3,7 +3,7 @@
     "enable": true,
     "product": "CNC",
     "stocks": {
-      "YESBANK": { "qty": 1, "enable": true },
+      "YESBANK": { "qty": 7, "enable": true },
       "ONGC": { "qty": 1, "enable": false }
     }
   },
@@ -12,7 +12,7 @@
     "enable": true,
     "product": "MIS",
     "stocks": {
-      "INFY": { "qty": 1, "enable": true }
+      "INFY": { "qty": 7, "enable": true }
     }
     
   },
@@ -20,12 +20,12 @@
   "enable": true,
   "product": "MIS",
   "stocks": {
-    "INFY": { "qty": 1, "enable": true }
+    "YESBANK": { "qty": 7, "enable": true }
   }
   },
 
   "ema_strategy": {
-    "enable": true,
+    "enable": false,
     "product": "MIS",
     "stocks": {
       "INFY": { "qty": 1, "enable": true }
